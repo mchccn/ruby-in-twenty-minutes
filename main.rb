@@ -1,12 +1,22 @@
+=begin
+
+ruby is cool but wtf are these multi-line comments anyways enjoy ruby in twenty minutes
+
+=end
+
 "Hello World"
 # => "Hello World"
 
 =begin
+
 What just happened?
 Did we just write the world’s shortest “Hello World” program?
+
 Not exactly.
+
 The second line is just IRB’s way of telling us the result of the last expression it evaluated.
 If we want to print out “Hello World” we need a bit more:
+
 =end
 
 puts "Hello World"
@@ -14,7 +24,9 @@ puts "Hello World"
 # => nil
 
 =begin
+
 Already, we have enough to use IRB as a basic calculator:
+
 =end
 
 3 + 2
@@ -30,6 +42,7 @@ Math.sqrt(9)
 # => 3.0
 
 =begin
+
 Math is a built-in module for mathematics. Modules serve two roles in Ruby.
 This shows one role: grouping similar methods together under a familiar name.
 Math also contains methods like sin() and tan().
@@ -45,17 +58,22 @@ That’s because most of the time the square root of a number won’t be an inte
 
 What if we want to remember the result of some of this math?
 Assign the result to a variable.
+
 =end
 
 a = 3 ** 2
 # => 9
+
 b = 4 ** 2
 # => 16
+
 Math.sqrt(a+b)
 # => 5.0
 
 =begin
+
 What if we want to say “Hello” a lot without getting our fingers all tired? We need to define a method!
+
 =end
 
 def hi
@@ -64,7 +82,9 @@ end
 # => :hi
 
 =begin
+
 Now let’s try running that method a few times:
+
 =end
 
 hi
@@ -76,11 +96,13 @@ hi()
 # => nil
 
 =begin
+
 Well, that was easy. Calling a method in Ruby is as easy as just mentioning its name to Ruby.
 If the method doesn’t take parameters that’s all you need. You can add empty parentheses if you’d like, but they’re not needed.
 
 What if we want to say hello to one person, and not the whole world?
 Just redefine hi to take a name as a parameter.
+
 =end
 
 def hi(name)
@@ -93,9 +115,11 @@ hi("Matz")
 # => nil
 
 =begin
+
 What’s the #{name} bit? That’s Ruby’s way of inserting something into a string.
 The bit between the braces is turned into a string (if it isn’t one already) and then substituted into the outer string at that point. 
 You can also use this to make sure that someone’s name is properly capitalized:
+
 =end
 
 def hi(name = "World")
@@ -112,21 +136,25 @@ hi
 # => nil
 
 =begin
+
 A couple of other tricks to spot here. One is that we’re calling the method without parentheses again.
 If it’s obvious what you’re doing, the parentheses are optional. The other trick is the default parameter World.
 What this is saying is “If the name isn’t supplied, use the default name of "World"”.
 
 What if we want a real greeter around, one that remembers your name and welcomes you and treats you always with respect.
 You might want to use an object for that. Let’s create a “Greeter” class.
+
 =end
 
 class Greeter
   def initialize(name = "World")
     @name = name
   end
+  
   def say_hi
     puts "Hi #{@name}!"
   end
+  
   def say_bye
     puts "Bye #{@name}, come back soon."
   end
@@ -134,9 +162,11 @@ end
 # => :say_bye
 
 =begin
+
 The new keyword here is class. This defines a new class called Greeter and a bunch of methods for that class.
 Also notice @name. This is an instance variable, and is available to all the methods of the class.
 As you can see it’s used by say_hi and say_bye.
+
 =end
 
 greeter = Greeter.new("Pat")
@@ -145,12 +175,15 @@ greeter = Greeter.new("Pat")
 greeter.say_hi
 # Hi Pat!
 # => nil
+
 greeter.say_bye
 # Bye Pat, come back soon.
 # => nil
 
 =begin
+
 Once the greeter object is created, it remembers that the name is Pat. Hmm, what if we want to get at the name directly?
+
 =end
 
 greeter.@name
@@ -170,11 +203,12 @@ Greeter.instance_methods
 #     :protected_methods, :frozen?, :public_methods, :singleton_methods,
 #     :!, :==, :!=, :__send__, :equal?, :instance_eval, :instance_exec, :__id__]
 
-
 =begin
+
 Whoa. That’s a lot of methods. We only defined two methods.
 What’s going on here? Well this is all of the methods for Greeter objects, a complete list, including ones defined by ancestor classes.
 If we want to just list methods defined for Greeter we can tell it to not include ancestors by passing it the parameter false, meaning we don’t want methods defined by ancestors.
+
 =end
 
 Greeter.instance_methods(false)
@@ -190,9 +224,11 @@ greeter.respond_to?("to_s")
 # => true
 
 =begin
+
 So, it knows say_hi, and to_s (meaning convert something to a string, a method that’s defined by default for every object), but it doesn’t know name.
 
 But what if you want to be able to view or change the name? Ruby provides an easy way of providing access to an object’s variables.
+
 =end
 
 class Greeter
@@ -202,24 +238,32 @@ end
 
 greeter = Greeter.new("Andy")
 # => #<Greeter:0x3c9b0 @name="Andy">
+
 greeter.respond_to?("name")
 # => true
+
 greeter.respond_to?("name=")
 # => true
+
 greeter.say_hi
 # Hi Andy!
 # => nil
+
 greeter.name="Betty"
 # => "Betty"
+
 greeter
 # => #<Greeter:0x3c9b0 @name="Betty">
+
 greeter.name
 # => "Betty"
+
 greeter.say_hi
 # Hi Betty!
 # => nil
 
 =begin
+
 Using attr_accessor defined two new methods for us, name to get the value, and name= to set it.
 
 This greeter isn’t all that interesting though, it can only deal with one person at a time. What if we had some kind of MegaGreeter that could either greet the world, one person, or a whole list of people?
@@ -227,6 +271,7 @@ This greeter isn’t all that interesting though, it can only deal with one pers
 Let’s write this one in a file instead of directly in the interactive Ruby interpreter IRB.
 
 To quit IRB, type “quit”, “exit” or just hit Control-D.
+
 =end
 
 #!/usr/bin/env ruby
@@ -304,12 +349,14 @@ end
 # ...
 
 =begin
+
 So, looking deeper at our new program, notice the initial lines, which begin with a hash mark (#).
 In Ruby, anything on a line after a hash mark is a comment and is ignored by the interpreter.
 The first line of the file is a special case, and under a Unix-like operating system tells the shell how to run the file.
 The rest of the comments are there just for clarity.
 
 Our say_hi method has become a bit trickier:
+
 =end
 
 def say_hi
@@ -326,10 +373,12 @@ def say_hi
 end
 
 =begin
+
 If the @names object responds to each, it is something that you can iterate over, so iterate over it and greet each person in turn.
 Finally, if @names is anything else, just let it get turned into a string automatically and do the default greeting.
 
 Let’s look at that iterator in more depth:
+
 =end
 
 @names.each do |name|
@@ -337,8 +386,10 @@ Let’s look at that iterator in more depth:
 end
 
 =begin
+
 The real power of blocks is when dealing with things that are more complicated than lists.
 Beyond handling simple housekeeping details within the method, you can also handle setup, teardown, and errors—all hidden away from the cares of the user.
+
 =end
 
 # Say bye to everybody
@@ -354,25 +405,33 @@ def say_bye
 end
 
 =begin
+
 The say_bye method doesn’t use each, instead it checks to see if @names responds to the join method, and if so, uses it.
 Otherwise, it just prints out the variable as a string.
 This method of not caring about the actual type of a variable, just relying on what methods it supports is known as “Duck Typing”, as in “if it walks like a duck and quacks like a duck…”.
 The benefit of this is that it doesn’t unnecessarily restrict the types of variables that are supported.
 If someone comes up with a new kind of list class, as long as it implements the join method with the same semantics as other lists, everything will work as planned.
+
 =end
 
 if __FILE__ == $0
 end
 
 =begin
+
 __FILE__ is the magic variable that contains the name of the current file.
 $0 is the name of the file used to start the program.
 This check says “If this is the main file being used…”
 This allows a file to be used as a library, and not to execute code in that context, but if the file is being used as an executable, then execute that code.
+
 =end
 
 =begin
+
 So that’s it for the quick tour of Ruby.
 There’s a lot more to explore, the different control structures that Ruby offers; the use of blocks and yield; modules as mixins; and more.
 I hope this taste of Ruby has left you wanting to learn more.
+
 =end
+
+# cool you made it to the end
